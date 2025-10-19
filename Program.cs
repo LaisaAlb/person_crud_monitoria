@@ -1,3 +1,6 @@
+using Person.Data;
+using Person.Routes;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<PersonContext>();
 
 var app = builder.Build();
 
@@ -16,17 +20,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("person", () => "Olá pessoa");
+app.PersonRoutes();
 
 app.UseHttpsRedirection();
 app.Run();
-
-
-
-
-
-// Configuração do swagger
-// Criando a api:  dotnet new webapi --name person - minimal
-// Instalando o swegger:  dotnet add package Swashbuckle.AspNetCore
-// dotnet restore
-// dotnet run
